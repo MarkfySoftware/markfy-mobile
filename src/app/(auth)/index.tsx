@@ -1,25 +1,34 @@
 import { ImageBackground, StyleSheet, View } from "react-native";
 import BottomDrawer from "@/src/components/BottomDrawer";
 import Button from "@/src/components/Button";
+import { useNavigation } from "expo-router";
+import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
 
 export default function TabOneScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   return (
-    <ImageBackground
-      style={styles.backgroundImage}
-      source={require("../../../assets/images/auth-bg.png")}
-      resizeMode="cover"
-    >
-      <BottomDrawer
-        description="Confie em nosso olhar e destaque-se em cada esquina."
-        title="Entrar ou criar conta."
-        content={
-          <View style={styles.actions}>
-            <Button label="Já tenho uma conta" />
-            <Button variant="outline" label="Ainda não tenho uma conta" />
-          </View>
-        }
-      />
-    </ImageBackground>
+    <View style={{ flex: 1 }}>
+      <ImageBackground
+        style={styles.backgroundImage}
+        source={require("../../../assets/images/auth-bg.png")}
+        resizeMode="cover"
+      >
+        <BottomDrawer
+          description="Confie em nosso olhar e destaque-se em cada esquina."
+          title="Entrar ou criar conta."
+          content={
+            <View style={styles.actions}>
+              <Button
+                onPress={() => navigation.navigate("login")}
+                label="Já tenho uma conta"
+              />
+              <Button variant="outline" label="Ainda não tenho uma conta" />
+            </View>
+          }
+        />
+      </ImageBackground>
+    </View>
   );
 }
 
