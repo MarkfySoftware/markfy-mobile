@@ -1,50 +1,48 @@
-import { StyleSheet, TextInput } from "react-native";
-
 import Button from "@/src/components/Button";
 import Input from "@/src/components/Input";
 import RoundedIcon from "@/src/components/RoundedIcon";
 import { StyledText } from "@/src/components/StyledText";
-import { View } from "@/src/components/Themed";
 import { useNavigation } from "expo-router";
-import { useRef } from "react";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
 
-export default function LoginScreen() {
+export default function Register() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
-
-  const passwordRef = useRef<TextInput>(null);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <RoundedIcon icon="lock" />
+          <RoundedIcon icon="code-fork" />
 
           {/* Header Title */}
-          <StyledText style={styles.headerTitle}>Vamos te conectar!</StyledText>
+          <StyledText style={styles.headerTitle}>Hora de começar!</StyledText>
 
           {/* Header description */}
           <StyledText style={styles.headerDescription}>
-            Coloque o e-mail e senha utilizados na hora da criação da conta.
+            Crie uma conta com dados que você não vai esquecer.
           </StyledText>
         </View>
 
         <View style={styles.form}>
-          <Input
-            label="E-mail"
-            onSubmitEditing={() => passwordRef.current?.focus()}
-          />
+          <View style={styles.formInputRow}>
+            <Input label="Nome" />
+            <Input label="Sobrenome" />
+          </View>
+
+          <Input label="E-mail" />
           <Input label="Senha" />
         </View>
       </View>
 
       <View style={styles.actions}>
-        <Button label="Entrar na conta" />
+        <Button label="Criar minha conta" />
         <Button
-          onPress={() => navigation.navigate("register")}
           variant="outline"
-          label="Ainda não tenho uma conta"
+          onPress={() => navigation.navigate("login")}
+          label="Já tenho uma conta"
         />
       </View>
     </SafeAreaView>
@@ -70,20 +68,14 @@ const styles = StyleSheet.create({
 
   headerDescription: { fontSize: 18, textAlign: "center", color: "#858585" },
 
-  form: {
-    display: "flex",
-    gap: 20,
-    height: "100%",
-    width: "100%",
-    marginTop: 20,
-  },
+  form: { display: "flex", width: "100%", marginTop: 20, gap: 20 },
 
-  // formInputRow: {
-  //   width: "100%",
-  //   display: "flex",
-  //   flexDirection: "row",
-  //   gap: 8,
-  // },
+  formInputRow: {
+    width: "50%",
+    display: "flex",
+    flexDirection: "row",
+    gap: 8,
+  },
 
   actions: {
     paddingHorizontal: 20,

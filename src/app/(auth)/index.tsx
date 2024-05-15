@@ -23,7 +23,11 @@ export default function TabOneScreen() {
                 onPress={() => navigation.navigate("login")}
                 label="Já tenho uma conta"
               />
-              <Button variant="outline" label="Ainda não tenho uma conta" />
+              <Button
+                variant="outline"
+                onPress={() => navigation.navigate("register")}
+                label="Ainda não tenho uma conta"
+              />
             </View>
           }
         />
