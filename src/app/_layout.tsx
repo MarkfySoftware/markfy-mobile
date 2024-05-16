@@ -1,60 +1,68 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
+import FontAwesome from '@expo/vector-icons/FontAwesome'
 import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import "react-native-reanimated";
+    DarkTheme,
+    DefaultTheme,
+    ThemeProvider,
+} from '@react-navigation/native'
+import { useFonts } from 'expo-font'
+import { Stack } from 'expo-router'
+import * as SplashScreen from 'expo-splash-screen'
+import { useEffect } from 'react'
+import 'react-native-reanimated'
 
-import { useColorScheme } from "@/src/hooks/useColorScheme";
-import { AuthProvider } from "../contexts/AuthContext";
+import { useColorScheme } from '@/src/hooks/useColorScheme'
+import { AuthProvider } from '../contexts/AuthContext'
 
-export { ErrorBoundary } from "expo-router";
+export { ErrorBoundary } from 'expo-router'
 
 export const unstable_settings = {
-  initialRouteName: "(auth)",
-};
+    initialRouteName: '(root)',
+}
 
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    DMSans: require("../../assets/fonts/DMSans-Regular.ttf"),
-    ...FontAwesome.font,
-  });
+    const [loaded, error] = useFonts({
+        DMSans: require('../../assets/fonts/DMSans-Regular.ttf'),
+        ...FontAwesome.font,
+    })
 
-  useEffect(() => {
-    if (error) throw error;
-  }, [error]);
+    useEffect(() => {
+        if (error) throw error
+    }, [error])
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    useEffect(() => {
+        if (loaded) {
+            SplashScreen.hideAsync()
+        }
+    }, [loaded])
+
+    if (!loaded) {
+        return null
     }
-  }, [loaded]);
 
-  if (!loaded) {
-    return null;
-  }
-
-  return <RootLayoutNav />;
+    return <RootLayoutNav />
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+    const colorScheme = useColorScheme()
 
-  return (
-    <AuthProvider>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="(home)" options={{ headerShown: false }} />
-        </Stack>
-      </ThemeProvider>
-    </AuthProvider>
-  );
+    return (
+        <AuthProvider>
+            <ThemeProvider
+                value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+            >
+                <Stack>
+                    <Stack.Screen
+                        name="(auth)"
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="(root)"
+                        options={{ headerShown: false }}
+                    />
+                </Stack>
+            </ThemeProvider>
+        </AuthProvider>
+    )
 }
