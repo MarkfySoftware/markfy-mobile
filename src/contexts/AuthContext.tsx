@@ -7,6 +7,8 @@ import React, {
 } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { api } from "../api";
+import { useNavigation } from "expo-router";
+import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
 
 interface User {
   // TODO: All any's typing should be changed in the future
@@ -45,6 +47,8 @@ interface AuthProviderProps {
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -83,6 +87,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const userData = (await api.get(`usuario/email/${email}`)).data;
 
       setUser(userData);
+
+      navigation.navigate("(home)");
     } catch (err) {
       console.error(err);
     }

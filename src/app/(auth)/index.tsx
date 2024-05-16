@@ -9,12 +9,15 @@ import { useEffect } from "react";
 export default function AuthRoot() {
   const { user } = useAuth();
 
+  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+
   useEffect(() => {
+    console.log("renderizou");
+
     if (user) {
+      navigation.navigate("(home)");
     }
   }, []);
-
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   return (
     <View style={{ flex: 1 }}>
