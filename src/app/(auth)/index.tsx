@@ -1,59 +1,59 @@
-import { ImageBackground, StyleSheet, View } from "react-native";
-import BottomDrawer from "@/src/components/BottomDrawer";
-import Button from "@/src/components/Button";
-import { useNavigation } from "expo-router";
-import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
-import { useAuth } from "@/src/contexts/AuthContext";
-import { useEffect } from "react";
+import { ImageBackground, StyleSheet, View } from 'react-native'
+import BottomDrawer from '@/src/components/layout/BottomDrawer'
+import Button from '@/src/components/shared/Button'
+import { useNavigation } from 'expo-router'
+import { NativeStackNavigationProp } from 'react-native-screens/lib/typescript/native-stack/types'
+import { useAuth } from '@/src/contexts/AuthContext'
+import { useEffect } from 'react'
 
 export default function AuthRoot() {
-  const { user } = useAuth();
+    const { user } = useAuth()
 
-  const navigation = useNavigation<NativeStackNavigationProp<any>>();
+    const navigation = useNavigation<NativeStackNavigationProp<any>>()
 
-  useEffect(() => {
-    console.log("renderizou");
+    useEffect(() => {
+        console.log('renderizou')
 
-    if (user) {
-      navigation.navigate("(home)");
-    }
-  }, []);
+        if (user) {
+            navigation.navigate('(home)')
+        }
+    }, [])
 
-  return (
-    <View style={{ flex: 1 }}>
-      <ImageBackground
-        style={styles.backgroundImage}
-        source={require("../../../assets/images/auth-bg.png")}
-        resizeMode="cover"
-      >
-        <BottomDrawer
-          description="Confie em nosso olhar e destaque-se em cada esquina."
-          title="Entrar ou criar conta."
-          content={
-            <View style={styles.actions}>
-              <Button
-                onPress={() => navigation.navigate("login")}
-                label="Já tenho uma conta"
-              />
-              <Button
-                variant="outline"
-                onPress={() => navigation.navigate("register")}
-                label="Ainda não tenho uma conta"
-              />
-            </View>
-          }
-        />
-      </ImageBackground>
-    </View>
-  );
+    return (
+        <View style={{ flex: 1 }}>
+            <ImageBackground
+                style={styles.backgroundImage}
+                source={require('../../../assets/images/auth-bg.png')}
+                resizeMode="cover"
+            >
+                <BottomDrawer
+                    description="Confie em nosso olhar e destaque-se em cada esquina."
+                    title="Entrar ou criar conta."
+                    content={
+                        <View style={styles.actions}>
+                            <Button
+                                onPress={() => navigation.navigate('login')}
+                                label="Já tenho uma conta"
+                            />
+                            <Button
+                                variant="outline"
+                                onPress={() => navigation.navigate('register')}
+                                label="Ainda não tenho uma conta"
+                            />
+                        </View>
+                    }
+                />
+            </ImageBackground>
+        </View>
+    )
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    display: "flex",
-    justifyContent: "flex-end",
-    flex: 1,
-  },
+    backgroundImage: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        flex: 1,
+    },
 
-  actions: { display: "flex", flexDirection: "column", gap: 10 },
-});
+    actions: { display: 'flex', flexDirection: 'column', gap: 10 },
+})
