@@ -1,19 +1,28 @@
-import { StyleSheet, TextInput } from "react-native";
-
+import { StyleSheet } from "react-native";
 import Button from "@/src/components/Button";
 import Input from "@/src/components/Input";
 import RoundedIcon from "@/src/components/RoundedIcon";
 import { StyledText } from "@/src/components/StyledText";
 import { View } from "@/src/components/Themed";
 import { useNavigation } from "expo-router";
-import { useRef } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
+import { useAuth } from "@/src/contexts/AuthContext";
 
 export default function LoginScreen() {
+  const { signIn } = useAuth();
+
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
-  const passwordRef = useRef<TextInput>(null);
+  const [userData, setUserData] = useState({ email: "", password: "" });
+
+  const handleInputChange = (name: string, value: string) => {
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
@@ -32,15 +41,20 @@ export default function LoginScreen() {
 
         <View style={styles.form}>
           <Input
+            onChangeText={(text) => handleInputChange("email", text)}
+            value={userData.email}
             label="E-mail"
-            onSubmitEditing={() => passwordRef.current?.focus()}
           />
-          <Input label="Senha" />
+          <Input
+            onChangeText={(text) => handleInputChange("password", text)}
+            value={userData.password}
+            label="Senha"
+          />
         </View>
       </View>
 
       <View style={styles.actions}>
-        <Button label="Entrar na conta" />
+        <Button onPress={() => signIn(userData)} label="Entrar na conta" />
         <Button
           onPress={() => navigation.navigate("register")}
           variant="outline"

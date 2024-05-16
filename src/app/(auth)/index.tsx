@@ -3,8 +3,17 @@ import BottomDrawer from "@/src/components/BottomDrawer";
 import Button from "@/src/components/Button";
 import { useNavigation } from "expo-router";
 import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
+import { useAuth } from "@/src/contexts/AuthContext";
+import { useEffect } from "react";
 
-export default function TabOneScreen() {
+export default function AuthRoot() {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+    }
+  }, []);
+
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
   return (
