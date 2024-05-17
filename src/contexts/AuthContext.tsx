@@ -88,7 +88,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
       setUser(userData);
 
-      navigation.navigate("(home)");
+      navigation.navigate("(root)");
     } catch (err) {
       console.error(err);
     }
