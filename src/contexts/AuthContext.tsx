@@ -9,6 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { api } from "../api";
 import { useNavigation } from "expo-router";
 import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
+import { Alert } from "react-native";
 
 interface User {
   // TODO: All any's typing should be changed in the future
@@ -75,21 +76,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         senha: password,
       });
 
-      console.log(response.data);
+      if (response.status === 200) {
+        const { token } = response.data;
 
-      const { token } = response.data;
+        await AsyncStorage.setItem("@Maskfy:user", JSON.stringify(user));
+        await AsyncStorage.setItem("@Maskfy:token", token);
 
-      await AsyncStorage.setItem("@Maskfy:user", JSON.stringify(user));
-      await AsyncStorage.setItem("@Maskfy:token", token);
+        api.defaults.headers.Authorization = `Bearer ${token}`;
 
-      api.defaults.headers.Authorization = `Bearer ${token}`;
+        const userData = (await api.get(`usuario/email/${email}`)).data;
 
-      const userData = (await api.get(`usuario/email/${email}`)).data;
+        setUser(userData);
 
-      setUser(userData);
-
-      navigation.navigate("(root)");
+        navigation.navigate("(root)");
+      }
     } catch (err) {
+      Alert.alert("Essa conta não existe, tente novamente!");
+
       console.error(err);
     }
   };
