@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { StyledText } from "../../shared/StyledText";
 
-export default function NoProductsFound() {
+export default function NoTrendingProductsFound() {
   return (
     <View
       style={{
@@ -13,8 +13,10 @@ export default function NoProductsFound() {
       }}
     >
       <StyledText style={{ fontSize: 18 }}>Ops!</StyledText>
-      <StyledText style={{ fontSize: 16, color: "#797979" }}>
-        Não conseguimos encontrar nenhum produto
+      <StyledText
+        style={{ fontSize: 16, color: "#797979", textAlign: "center" }}
+      >
+        Não conseguimos encontrar nenhum produto em alta
       </StyledText>
     </View>
   );

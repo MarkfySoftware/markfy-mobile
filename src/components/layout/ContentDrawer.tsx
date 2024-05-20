@@ -37,7 +37,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "white",
     padding: 12,
-    borderRadius: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#ebebeb",
+    display: "flex",
+    gap: 20,
   },
 
   header: {
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
   },
 
   headerTitle: {
-    fontSize: 18,
+    fontSize: 20,
   },
 
   headerExtraAction: {

@@ -1,29 +1,63 @@
-import Colors from '@/src/constants/Colors'
-import { Ionicons } from '@expo/vector-icons'
-import { Tabs } from 'expo-router'
-import React from 'react'
+import Colors from "@/src/constants/Colors";
+import { Ionicons } from "@expo/vector-icons";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Stack, Tabs } from "expo-router";
+import React from "react";
+
+function HomeStack() {
+  return (
+    <Stack>
+      <Stack.Screen name="product" options={{ headerShown: false }} />
+    </Stack>
+  );
+}
 
 export default function HomeLayout() {
-    return (
-        <Tabs
-            screenOptions={{
-                tabBarActiveTintColor: Colors.primary,
-                tabBarInactiveTintColor: 'gray',
-                tabBarItemStyle: { height: 70 }, // Aumentar a altura das abas
-                tabBarLabelStyle: { fontSize: 24 }, // Aumentar o tamanho da fonte das labels das abas
-                tabBarIconStyle: { width: 40, height: 40 }, // Ajustar o tamanho do ícone
-            }}
-        >
-            <Tabs.Screen
-                name="index"
-                options={{
-                    headerShown: false,
-                    tabBarLabel: 'Home',
-                    tabBarIcon: ({ color, size }) => (
-                        <Ionicons name="home" color={color} size={size} /> // Ajuste o tamanho do ícone
-                    ),
-                }}
-            />
-        </Tabs>
-    )
+  return (
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: Colors.primary,
+        tabBarShowLabel: false,
+        tabBarInactiveTintColor: "gray",
+        tabBarStyle: {
+          position: "absolute",
+          height: 60,
+          margin: 10,
+          borderRadius: 20,
+          borderTopWidth: 0,
+          backgroundColor: "white",
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Página principal",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-sharp" color={color} size={size} /> // Ajuste o tamanho do ícone
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="product"
+        options={{
+          headerShown: false,
+          tabBarButton: () => null,
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Página principal",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person" color={color} size={size} /> // Ajuste o tamanho do ícone
+          ),
+        }}
+      />
+    </Tabs>
+  );
 }

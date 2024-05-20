@@ -1,13 +1,15 @@
+import { getAllProducts } from "@/src/api/services/products/get-all-products";
 import NoProductsFound from "@/src/components/cases/products/NoProductsFound";
+import NoTrendingProductsFound from "@/src/components/cases/products/NoTrendingProductsFound";
+import RowProduct from "@/src/components/cases/products/RowProduct";
 import ContentDrawer from "@/src/components/layout/ContentDrawer";
 import ContentWrapper from "@/src/components/layout/ContentWrapper";
 import { StyledText } from "@/src/components/shared/StyledText";
 import Colors from "@/src/constants/Colors";
 import { useAuth } from "@/src/contexts/AuthContext";
-import { useNavigation } from "expo-router";
-import React from "react";
+import { IProduct } from "@/src/types/Product";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
 
 export default function HomeRoot() {
   const { user } = useAuth();
@@ -25,9 +27,13 @@ export default function HomeRoot() {
       >
         <View>
           {/* Last Trendings */}
-          <View>
-            <ContentDrawer title="Últimas tendências" extraAction={() => {}}>
-              <NoProductsFound />
+          <View style={styles.content}>
+            <ContentDrawer title="Últimas tendências">
+              <NoTrendingProductsFound />
+            </ContentDrawer>
+
+            <ContentDrawer title="Você pode gostar também">
+              <ProductsList />
             </ContentDrawer>
           </View>
         </View>
@@ -48,4 +54,50 @@ const styles = StyleSheet.create({
 
     color: "white",
   },
+
+  content: {
+    display: "flex",
+    gap: 20,
+  },
 });
+
+export function ProductsList() {
+  const { user } = useAuth();
+
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchProducts = async () => {
+    try {
+      const products = await getAllProducts();
+      setProducts(products);
+      console.log(products);
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchProducts();
+    }
+  }, [user]);
+
+  if (loading) {
+    return <StyledText>Loading...</StyledText>;
+  }
+
+  if (products.length === 0) {
+    return <NoProductsFound />;
+  }
+
+  return (
+    <View>
+      {products.map((product) => (
+        <RowProduct key={product.id} product={product} />
+      ))}
+    </View>
+  );
+}
