@@ -12,12 +12,14 @@ import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/n
 export default function Register() {
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
-  const [userData, setUserData] = useState({
+  const initialUserData = {
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-  });
+  };
+
+  const [userData, setUserData] = useState(initialUserData);
 
   const handleInputChange = (name: string, value: string) => {
     setUserData((prevData) => ({
@@ -42,6 +44,8 @@ export default function Register() {
         navigation.navigate("login");
 
         Alert.alert("Pronto", "Conta criada com sucesso!");
+
+        setUserData(initialUserData);
         return;
       })
       .catch((err) => {
