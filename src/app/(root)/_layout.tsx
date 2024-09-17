@@ -48,6 +48,17 @@ export default function HomeLayout() {
         }}
       />
       <Tabs.Screen
+        name="my-store"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Minha loja",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="storefront" color={color} size={size} /> // Ajuste o tamanho do ícone
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           headerShown: false,
