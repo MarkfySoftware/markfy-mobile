@@ -1,6 +1,5 @@
 import Colors from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { createStackNavigator } from "@react-navigation/stack";
 import { Stack, Tabs } from "expo-router";
 import React from "react";
 
@@ -34,9 +33,8 @@ export default function HomeLayout() {
         options={{
           headerShown: false,
           tabBarLabel: "Página principal",
-          tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-sharp" color={color} size={size} /> // Ajuste o tamanho do ícone
+            <Ionicons name="home-sharp" color={color} size={size} />
           ),
         }}
       />
@@ -52,9 +50,18 @@ export default function HomeLayout() {
         options={{
           headerShown: false,
           tabBarLabel: "Minha loja",
-          tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="storefront" color={color} size={size} /> // Ajuste o tamanho do ícone
+            <Ionicons name="storefront" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          headerShown: false,
+          tabBarLabel: "Carrinho",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="cart" color={color} size={size} />
           ),
         }}
       />
@@ -62,10 +69,9 @@ export default function HomeLayout() {
         name="profile"
         options={{
           headerShown: false,
-          tabBarLabel: "Página principal",
-          tabBarShowLabel: false,
+          tabBarLabel: "Perfil",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" color={color} size={size} /> // Ajuste o tamanho do ícone
+            <Ionicons name="person" color={color} size={size} />
           ),
         }}
       />

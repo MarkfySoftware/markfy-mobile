@@ -4,16 +4,20 @@ import NoTrendingProductsFound from "@/src/components/cases/products/NoTrendingP
 import RowProduct from "@/src/components/cases/products/RowProduct";
 import ContentDrawer from "@/src/components/layout/ContentDrawer";
 import ContentWrapper from "@/src/components/layout/ContentWrapper";
+import Button from "@/src/components/shared/Button";
 import Skeleton from "@/src/components/shared/Skeleton";
 import { StyledText } from "@/src/components/shared/StyledText";
 import Colors from "@/src/constants/Colors";
 import { useAuth } from "@/src/contexts/AuthContext";
 import { IProduct } from "@/src/types/Product";
+import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function HomeRoot() {
   const { user } = useAuth();
+  const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.rootBackground }}>
@@ -21,8 +25,15 @@ export default function HomeRoot() {
         headerContent={
           <View style={styles.header}>
             <StyledText style={styles.headerName}>
-              Olá, {user?.nome.split(" ")[0]}
+              Olá, Bruno{user?.nome.split(" ")[0]}
             </StyledText>
+
+            <Ionicons
+              onPress={() => navigation.navigate("cart" as never)}
+              name="cart"
+              color={"#FFF"}
+              size={24}
+            />
           </View>
         }
       >
@@ -52,7 +63,6 @@ const styles = StyleSheet.create({
 
   headerName: {
     fontSize: 24,
-
     color: "white",
   },
 
@@ -63,48 +73,66 @@ const styles = StyleSheet.create({
 });
 
 export function ProductsList() {
-  const { user } = useAuth();
+  const mockProducts: IProduct[] = [
+    {
+      id: 1,
+      nome: "Calça Jeans",
+      valor: 120.99,
+      marca: "Levis",
+      tamanhoEnum: "M",
+      estoque: 15,
+      imagem:
+        "https://dondoca.com.br/wp-content/uploads/2024/06/dondoca_com_br-calca-jeans-premium-bordado-margaridas-img-6559.jpg",
+    },
+    {
+      id: 2,
+      nome: "Jaqueta de Couro",
+      valor: 199.9,
+      marca: "Zara",
+      tamanhoEnum: "L",
+      estoque: 7,
+      imagem: "https://example.com/jaqueta-de-couro.jpg",
+    },
+    {
+      id: 3,
+      nome: "Blusa de Moletom",
+      valor: 79.9,
+      marca: "Hering",
+      tamanhoEnum: "G",
+      estoque: 20,
+      imagem: "https://example.com/blusa-de-moletom.jpg",
+    },
+    {
+      id: 4,
+      nome: "Vestido Floral",
+      valor: 149.9,
+      marca: "Farm",
+      tamanhoEnum: "P",
+      estoque: 5,
+      imagem: "https://example.com/vestido-floral.jpg",
+    },
+    {
+      id: 5,
+      nome: "Camiseta Básica",
+      valor: 29.9,
+      marca: "Uniqlo",
+      tamanhoEnum: "M",
+      estoque: 30,
+      imagem: "https://example.com/camiseta-basica.jpg",
+    },
+  ];
 
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  const fetchProducts = async () => {
-    try {
-      const products = await getAllProducts();
-      setProducts(products);
-      console.log(products);
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      fetchProducts();
-    }
-  }, [user]);
-
-  if (loading) {
-    return (
-      <View style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-        <Skeleton />
-        <Skeleton />
-        <Skeleton />
-      </View>
-    );
-  }
-
-  if (products.length === 0) {
-    return <NoProductsFound />;
-  }
+  const [products, setProducts] = useState<IProduct[]>(mockProducts);
 
   return (
     <View style={{ display: "flex", gap: 20 }}>
-      {products.map((product) => (
-        <RowProduct key={product.id} product={product} />
-      ))}
+      {products.length === 0 ? (
+        <NoProductsFound />
+      ) : (
+        products.map((product) => (
+          <RowProduct key={product.id} product={product} />
+        ))
+      )}
     </View>
   );
 }

@@ -61,7 +61,10 @@ export default function LoginScreen() {
       </View>
 
       <View style={styles.actions}>
-        <Button onPress={() => signIn(userData)} label="Entrar na conta" />
+        <Button
+          onPress={() => navigation.navigate("(root)")}
+          label="Entrar na conta"
+        />
         <Button
           onPress={() => navigation.navigate("register")}
           variant="outline"

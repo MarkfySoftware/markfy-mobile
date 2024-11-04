@@ -5,4 +5,5 @@ export interface IProduct {
   marca: string;
   tamanhoEnum: string;
   estoque: number;
+  imagem?: string;
 }
